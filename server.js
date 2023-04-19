@@ -35,7 +35,7 @@ app.get('/', (request, response) => {
 });
 
 
-// // Get user name from parameter input
+// Get user name from parameter input
 // app.get('/hello', (request, response) => {
 //   let firstName = request.query.firstName;
 //   let lastName = request.query.lastName;
@@ -47,47 +47,30 @@ app.get('/', (request, response) => {
 // });
 
 
-app.get('/weather', (request,response,next)=>{
-    try{
-   console.log(weatherData[0].city_name);
-   let locaLat = request.query.lat;
-   let localLon = request.query.lon;
-   let localCity = request.query.city;
-   let returnedCity = weatherData.find(city => city.city_name === localCity);
-   //console.log(returnedCity);
-   
-   let dataToSend = new Weather(returnedCity);
-   dataToSend.generateWeatherData();
-   console.log(dataToSend.myWeatherData);
+app.get('/weather', (req, res) => {
+  const { searchQuery } = req.query;
+  const cityData = weatherData.find(city => city.city_name.toLowerCase() === searchQuery.toLowerCase());
+  // find(city => city.city_name.toLowerCase() === searchQuery.toLowerCase());
+  // city => city.lat === lat && city.lon === lon &&
 
-   // let returnedWeather = weatherData.find(weather => weather.data.description === )
+  // if (!cityData) {
+  //   return handleNotFoundError(req, res);
+  // }
 
-   response.status(200).send(dataToSend.myWeatherData);
-    }catch(error){
-       next(error);
-    }
-})
+  const forecastData = cityData.data.map(day => new Forecast(day));
 
-class Forecast{
-   constructor(ForecastObj){
-       this.cityName = ForecastObj.city_name,
-       this.lattitude = ForecastObj.lon,
-       this.longitude = ForecastObj.lat,
-       this.data = ForecastObj.data
-   }
-   myForecastData =[];
+  res.send(forecastData);
+});
 
-   generateForecastData(){
-       this.myForecastData = this.data.reduce((allForecast,dayForecast)=>{
-           // console.log(dayForecast.datetime);
-           // console.log(dayForecast.high_temp);
-           // console.log(dayForecast.low_temp);
-           allForecast.push({'date':dayForecast.datetime},{'hightemp': dayForecast.high_temp}, {'lowtemp': dayForecast.low_temp});
-           return allForecast;
-       },[]);
-   }
+class Forecast {
+  constructor(dayData) {
+    this.date = dayData.valid_date;
+    this.description = dayData.weather.description;
+    this.minTemp = dayData.min_temp;
+    this.maxTemp = dayData.max_temp;
+    this.icon = dayData.weather.icon;
+  }
 }
-
 
 // *** CATCH ALL ENDPOINT SHOULD BE THE LAST DEFINED ***
 app.get('*', (request, response) => {
