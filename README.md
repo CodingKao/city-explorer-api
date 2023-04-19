@@ -5,21 +5,43 @@
 **Version**: 1.0.0 (increment the patch/fix version number if you make more commits past your first submission)
 
 ## Overview
-<!-- Provide a high level overview of what this application is and why you are building it, beyond the fact that it's an assignment for this class. (i.e. What's your problem domain?) -->
+This application is a web-based tool that provides weather forecasts and location-based data for cities around the world. It consists of a custom API server built using Node.js, npm, and Express.js, and a front-end application built using React.js and Axios. The goal is to provide users with a reliable and user-friendly tool for accessing weather and location-based data.
 
 ## Getting Started
-<!-- What are the steps that a user must take in order to build this app on their own machine and get it running? -->
+To hook up a front-end React application with a back-end server, you can create an Express server from scratch. Here are the steps:
+
+- Install Node.js
+- Create a new project directory
+- Initialize a new Node.js project
+- Install Express
+- Create an index.js file to serve as the entry point for your Express server
+- Define routes to handle incoming requests
+- Start the server
+
+Once the server is up and running, make HTTP requests to it from your React components using libraries like axios or fetch
 
 ## Architecture
-<!-- Provide a detailed description of the application design. What technologies (languages, libraries, etc) you're using, and any other relevant design information. -->
+The application is designed with Node.js, npm, Express.js, and dotenv for the back-end, and React.js and Axios for the front-end. Node.js runs the server-side, npm manages dependencies, Express.js builds the API, and dotenv handles sensitive information. React.js creates reusable UI components and manages application state, while Axios makes HTTP requests.
 
 ## Change Log
-<!-- Use this area to document the iterative changes made to your application as each feature is successfully implemented. Use time stamps. Here's an example:
+4-18-2023 1:00pm - Set up React repository, intall required dependencies, set up .gitignore and .eslintric.json and created weather.json file.
 
-01-01-2001 4:59pm - Application now has a fully-functional express server, with a GET route for the location resource. -->
+4-18-2023 3:00pm - Created Express server and API endpoint.
+
+4-18-2023 4:00pm - Coded the require statement, GET request using lat/lon and searchQuery, created a class for Forecase with properties of date and description as well as minTemp and maxTemp.
+
+4-18-2023 6:00pm - Tested endpoint in browser to verify that raw response object is rendering correctly.
+
+4-18-2023 7:00pm - Created weather.js component to render forecase data in browser.
+
+4-18-2023 9:00pm - Added styling and polish code.
 
 ## Credit and Collaborations
-<!-- Give credit (and a link) to other people or resources that helped you build this application. -->
+Instructors: Aubrey Patterson & JB Tellez
+
+TA: Tammy D. and Raul Z.
+
+Teammates: Kenya W., Coriana W., Isabel S., and Hayden C.
 
 **Time Estimates**
 
