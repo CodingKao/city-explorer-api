@@ -34,3 +34,6 @@ Start time: 1 pm
 Finish time: 9 pm
 
 Actual time needed to complete: 8 pm
+
+**WRRC**
+![WRRC](image_720.png)

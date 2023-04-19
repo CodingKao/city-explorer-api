@@ -33,7 +33,7 @@ app.listen(PORT, () => console.log(`Yay we are up on port ${PORT}`));
 app.get('/', (request, response) => {
   response.status(200).send('Welcome to my server!');
 });
-
+console.log('response');
 
 // Get user name from parameter input
 // app.get('/hello', (request, response) => {
@@ -46,31 +46,54 @@ app.get('/', (request, response) => {
 //   response.status(200).send(`Hello ${firstName} ${lastName}, welcome to my server`);
 // });
 
+app.get('/weather', (req, res, next) => {
+  console.log('Weather endpoint hit');
+  console.log('All weather data:', weatherData);
+  try {
+    let lat = parseFloat(req.query.lat);
+    let lon = parseFloat(req.query.lon);
+    let searchQuery = req.query.searchQuery;
 
-app.get('/weather', (req, res) => {
-  const { searchQuery } = req.query;
-  const cityData = weatherData.find(city => city.city_name.toLowerCase() === searchQuery.toLowerCase());
-  // find(city => city.city_name.toLowerCase() === searchQuery.toLowerCase());
-  // city => city.lat === lat && city.lon === lon &&
+    console.log('lat:', lat, 'lon:', lon, 'searchQuery:', searchQuery);
 
-  // if (!cityData) {
-  //   return handleNotFoundError(req, res);
-  // }
+    let foundWeather = weatherData.find(city => city.city_name.toLowerCase() === searchQuery.toLowerCase() ||
+      Math.abs(parseFloat(city.lat) - parseFloat(lat)) < 0.01 ||
+      Math.abs(parseFloat(city.lon) - parseFloat(lon)) < 0.01);
 
-  const forecastData = cityData.data.map(day => new Forecast(day));
 
-  res.send(forecastData);
+    console.log('foundWeather:', foundWeather);
+
+
+    // **** Trying to understand why this original code is not working ****
+    // let lat = req.query.lat;
+    // let lon = req.query.lon;
+    // let searchQuery = req.query.searchQuery;
+
+    // let foundWeather = weatherData.find(city => city.city_name.toLowerCase() === searchQuery.toLowerCase() && city.lat == lat && city.lon == lon);
+
+    if (!foundWeather) {
+      return res.status(404).send('No weather found');
+    }
+
+    let forecasts = foundWeather.data.map(weatherData => new Forecast(weatherData));
+
+    res.status(200).send(forecasts);
+  } catch (error) {
+    next(error);
+  }
 });
 
+// **** CLASS TO CLEAN UP BULKY DATA ****
 class Forecast {
-  constructor(dayData) {
-    this.date = dayData.valid_date;
-    this.description = dayData.weather.description;
-    this.minTemp = dayData.min_temp;
-    this.maxTemp = dayData.max_temp;
-    this.icon = dayData.weather.icon;
+  constructor(forecastData) {
+    this.date = forecastData.datetime;
+    this.description = forecastData.weather.description;
+    this.minTemp = forecastData.min_temp;
+    this.maxTemp = forecastData.max_temp;
+    this.icon = forecastData.weather.icon;
   }
 }
+
 
 // *** CATCH ALL ENDPOINT SHOULD BE THE LAST DEFINED ***
 app.get('*', (request, response) => {
