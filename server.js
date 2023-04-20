@@ -20,7 +20,7 @@ app.use(cors());
 
 
 // Select port of the app
-const PORT = process.env.PORT || 3002;
+const PORT = process.env.PORT || 3003;
 
 
 // Verifty port is running
@@ -44,12 +44,12 @@ console.log('Welcome to my server!');
 app.get('/movies', async (req, res, next) => {
   try {
     let city = req.query.city;
-    // let url = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.MOVIE_API_KEY}&query=${city}`;
-    // console.log(url);
-    // let response = await axios.get(url);
-    // console.log(response.data);
-    // let movies = response.data.results.map(movie => new Movie(movie));
-    // res.status(200).send(movies);
+    let url = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.MOVIE_API_KEY}&query=${city}`;
+    console.log(url);
+    let response = await axios.get(url);
+    console.log(response.data);
+    let movies = response.data.results.map(movie => new Movie(movie));
+    res.status(200).send(movies);
     
     
     // check if endpoint 'movies' works on Thunder
@@ -98,35 +98,17 @@ class Photo {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // ***** Weather ***** //
 app.get('/weather', async (req, res, next) => {
   try {
     let lat = parseFloat(req.query.lat);
     let lon = parseFloat(req.query.lon);
     let searchQuery = req.query.searchQuery;
-    let url = `https://api.weatherbit.io/v2.0/forecast/daily?key=${process.env.WEATHERBIT_API_KEY}&query=${searchQuery}&lat=${lat}&lon=${lon}&days=16`;
-    
+    let url = `https://api.weatherbit.io/v2.0/forecast/daily?key=${process.env.WEATHERBIT_API_KEY}&query=${searchQuery}&lat=${lat}&lon=${lon}`;
+    console.log(url);
 
     // check if endpoint 'weather' works on Thunder lat 47.60621
-    res.status(200).send(lat);
+    // res.status(200).send(lat);
     console.log('URL:', url); // request URL
 
     let weatherResponse = await axios.get(url)
@@ -147,7 +129,6 @@ class Forecast {
     this.description = forecastData.weather.description;
     this.minTemp = forecastData.min_temp;
     this.maxTemp = forecastData.max_temp;
-    this.icon = forecastData.weather.icon;
   }
 }
 
