@@ -20,7 +20,7 @@ app.use(cors());
 
 
 // Select port of the app
-const PORT = process.env.PORT || 3003;
+const PORT = process.env.PORT || 3001;
 
 
 // Verifty port is running
