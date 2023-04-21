@@ -74,3 +74,18 @@ Start time: 1 pm
 Finish time: 10 pm
 
 Actual time needed to complete: 9 hours
+
+## Lab 9
+**Time Estimates**
+
+For each of the lab features, make an estimate of the time it will take you to complete the feature, and record your start and finish times for that feature:
+
+Name of feature: Lab 9 Feature 1 - 2
+
+Estimate of time needed to complete: 6 hours
+
+Start time: 1 pm
+
+Finish time: 9 pm
+
+Actual time needed to complete: 8 hours
