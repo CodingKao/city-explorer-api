@@ -43,6 +43,28 @@ TA: Tammy D. and Raul Z.
 
 Teammates: Kenya W., Coriana W., Isabel S., and Hayden C.
 
+
+
+## Lab 6
+**Time Estimates**
+
+For each of the lab features, make an estimate of the time it will take you to complete the feature, and record your start and finish times for that feature:
+
+Name of feature: Lab 6 Feature 1 - 4
+
+Estimate of time needed to complete: 6 hours
+
+Start time: 1 pm
+
+Finish time: 6 pm
+
+Actual time needed to complete: 5 hours
+
+**WRRC**
+![WRRC](lab6WRRC.png)
+
+
+## Lab 7
 **Time Estimates**
 
 For each of the lab features, make an estimate of the time it will take you to complete the feature, and record your start and finish times for that feature:
@@ -58,7 +80,8 @@ Finish time: 9 pm
 Actual time needed to complete: 8 pm
 
 **WRRC**
-![WRRC](image_720.png)
+![WRRC](lab7WRRC.png)
+
 
 ## Lab 8
 **Time Estimates**
@@ -75,6 +98,7 @@ Finish time: 10 pm
 
 Actual time needed to complete: 9 hours
 
+
 ## Lab 9
 **Time Estimates**
 
@@ -86,6 +110,21 @@ Estimate of time needed to complete: 6 hours
 
 Start time: 1 pm
 
-Finish time: 9 pm
+Finish time: 6 pm
 
-Actual time needed to complete: 8 hours
+Actual time needed to complete: 5 hours
+
+## Lab 10
+**Time Estimates**
+
+For each of the lab features, make an estimate of the time it will take you to complete the feature, and record your start and finish times for that feature:
+
+Name of feature: Lab 10 Feature 1
+
+Estimate of time needed to complete: 6 hours
+
+Start time: 2 pm
+
+Finish time: 7 pm
+
+Actual time needed to complete: 5 hours
