@@ -1,21 +1,38 @@
 'use strict';
+
 const axios = require('axios');
+
+let cache = {};
+const CACHE_EXPIRATION_TIME = 2.628e+9;
 
 async function getMovies(req, res, next) {
   try {
     let city = req.query.city;
-    console.log(req.query);
+    let key = `${city}`;
 
-    let url = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.MOVIE_DB_API_KEY}&query=${city}`;
-    console.log(url);
+    if ((cache[key]) && (Date.now() - cache[key].created) < CACHE_EXPIRATION_TIME) {
+      console.log('Cache hit!', cache);
+      res.status(200).send(cache[key].data);
 
-    let moviesFromAxios = await axios.get(url);
-    let moviesToSend = moviesFromAxios.data.results.map(obj => new Movie(obj));
-    res.status(200).send(moviesToSend);
+    } else {
+      console.log('Cache miss!', cache);
+      let url = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.MOVIE_DB_API_KEY}&query=${city}`;
+      console.log(url);
+
+      let moviesFromAxios = await axios.get(url);
+      let moviesToSend = moviesFromAxios.data.results.map(obj => new Movie(obj));
+
+      cache[key] = {
+        data: moviesToSend,
+        created: Date.now()
+      };
+
+      res.status(200).send(moviesToSend);
+    }
 
 
     // check if endpoint 'movies' works on Thunder
-    res.status(200).send(city);
+    // res.status(200).send(city);
 
 
   } catch (error) {

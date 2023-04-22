@@ -1,22 +1,43 @@
 'use strict';
+
 const axios = require('axios');
+
+let cache = {};
+const CACHE_EXPIRATION_TIME = 8.64e+7;
+
 
 async function getWeather(req, res, next) {
   try {
     let lat = req.query.lat;
     let lon = req.query.lon;
-    let url = `http://api.weatherbit.io/v2.0/forecast/daily?key=${process.env.WEATHERBIT_API_KEY}&lat=${lat}&lon=${lon}`;
+    let key = `lat:${lat} lon:${lon}`;
 
-    // check if endpoint 'weather' works on Thunder lat 47.60621 lon -122.33207
-    // res.status(200).send(lat,lon);
-    console.log('URL:', url); // request URL
+    if ((cache[key]) && (Date.now() - cache[key].created) < CACHE_EXPIRATION_TIME) {
+      console.log('Cache hit!', cache);
+      res.status(200).send(cache[key].data);
 
-    let weatherAPI = await axios.get(url);
-    let forecasts = weatherAPI.data.data.map(obj => new Forecast(obj));
+    } else {
+      console.log('Cache miss!', cache);
+      let url = `http://api.weatherbit.io/v2.0/forecast/daily?key=${process.env.WEATHERBIT_API_KEY}&lat=${lat}&lon=${lon}`;
 
-    console.log('Forecasts:', forecasts); // mapped forecasts
+      // check if endpoint 'weather' works on Thunder lat 47.60621 lon -122.33207
+      // res.status(200).send(lat,lon);
+      console.log('URL:', url); // request URL
 
-    res.status(200).send(forecasts);
+      let weatherAPI = await axios.get(url);
+      let forecasts = weatherAPI.data.data.map(obj => new Forecast(obj));
+
+      console.log('Forecasts:', forecasts); // mapped forecasts
+
+      cache[key] = {
+        data: forecasts,
+        created: Date.now()
+      };
+
+      res.status(200).send(forecasts);
+
+    }
+
   } catch (error) {
     next(error);
   }

@@ -12,9 +12,6 @@ const getPhotos = require('./modules/photos');
 const getMovies = require('./modules/movies');
 const getWeather = require('./modules/weather');
 
-// set variable for weather.json
-// const weatherData = require('./data/weather.json');
-
 // *** app === server - Need to call Express to create the server
 const app = express();
 
@@ -29,13 +26,6 @@ const PORT = process.env.PORT || 3003;
 // Verifty port is running
 app.listen(PORT, () => console.log(`Yay we are up on port ${PORT}`));
 
-// **** ENDPOINTS ****
-// *** 1st arg - endpoint url as a string
-// *** 2nd arg - callback which will execute when that endpoint is hit
-//              ** 2 parameters, request, response
-
-
-// Welcome to server prompt
 app.get('/', (request, response) => {
   response.status(200).send('Welcome to my server!');
 });
